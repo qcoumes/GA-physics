@@ -1,0 +1,13 @@
+SET(E3GA_LIBRARIES ${CMAKE_SOURCE_DIR}/libs/libe3ga.so)
+IF (EXISTS "${E3GA_LIBRARIES}")
+    MESSAGE(STATUS "Found E3GA: ${E3GA_LIBRARIES}")
+ELSE ()
+    MESSAGE(FATAL_ERROR "E3GA not found: ${E3GA_LIBRARIES}")
+ENDIF ()
+
+SET(E3GA_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/libs/include/)
+IF (EXISTS ${E3GA_INCLUDE_DIRS})
+    MESSAGE(STATUS "include for lib e3ga found: ${E3GA_INCLUDE_DIRS}")
+ELSE ()
+    MESSAGE(FATAL_ERROR "include for lib e3ga invalid or not found: ${E3GA_INCLUDE_DIRS}")
+ENDIF ()

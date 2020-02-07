@@ -1,0 +1,89 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
+
+PROJECT(GA_physics)
+
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
+
+
+############################## 3RD PARTIES LIBS ################################
+
+SET(OpenGL_GL_PREFERENCE GLVND)
+
+FIND_PACKAGE(SDL2 REQUIRED)
+FIND_PACKAGE(OpenGL REQUIRED)
+FIND_PACKAGE(GLEW REQUIRED)
+FIND_PACKAGE(Eigen3 REQUIRED)
+FIND_PACKAGE(E3GA REQUIRED)
+
+INCLUDE_DIRECTORIES(
+    SYSTEM
+    ${SDL2_INCLUDE_DIRS}
+    ${OPENGL_INCLUDE_DIR}
+    ${GLEW_INCLUDE_DIR}
+    ${E3GA_INCLUDE_DIRS}
+)
+
+LINK_LIBRARIES(
+    ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY} ${E3GA_LIBRARIES}
+)
+################################# GA Physics ###################################
+
+
+SET(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
+SET(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
+
+INCLUDE_DIRECTORIES(${INCLUDE_DIR})
+
+FILE(GLOB_RECURSE HEADER_FILES ${INCLUDE_DIR}*.hpp)
+FILE(GLOB_RECURSE SOURCE_FILES ${SOURCE_DIR}/*.cpp)
+FILE(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/output)
+
+SET(TARGET_NAME ga_physics)
+ADD_EXECUTABLE(${TARGET_NAME} ${SOURCE_FILES} ${HEADER_FILES} ${SHADER_FILES})
+TARGET_LINK_LIBRARIES(${TARGET_NAME})
+
+
+TARGET_COMPILE_OPTIONS(
+    ${TARGET_NAME} PRIVATE
+    -g
+    -O2
+    -Werror
+    -std=c++17
+)
+# Adding as much warning as possible on GNU gcc/g++ and Clang
+IF (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    TARGET_COMPILE_OPTIONS(
+        ${TARGET_NAME} PRIVATE
+        -Wall
+        -Wextra
+    )
+ELSEIF (CMAKE_CXX_COMPILER_ID MATCHES "[Cc]lang")
+    TARGET_COMPILE_OPTIONS(
+        ${TARGET_NAME} PRIVATE
+        -Weverything
+        -Wfatal-errors
+    )
+ENDIF ()
+
+
+# Disable some warnings
+TARGET_COMPILE_OPTIONS(
+    ${TARGET_NAME} PRIVATE
+    -Wno-unused-parameter
+    -Wno-shadow
+)
+IF (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+
+ELSEIF (CMAKE_CXX_COMPILER_ID MATCHES "[Cc]lang")
+    TARGET_COMPILE_OPTIONS(
+        ${TARGET_NAME} PRIVATE
+        -Wno-padded
+        -Wno-c++98-compat
+        -Wno-weak-vtables
+        -Wno-exit-time-destructors
+    )
+ENDIF ()
+
+
+
+
