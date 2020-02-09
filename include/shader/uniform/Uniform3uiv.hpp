@@ -1,19 +1,19 @@
-#ifndef GA_PHYSICS_UNIFORM3uiv_HPP
-#define GA_PHYSICS_UNIFORM3uiv_HPP
+#ifndef OPENGL_UNIFORM3uiv_HPP
+#define OPENGL_UNIFORM3uiv_HPP
 
 #include <shader/uniform/IUniform.hpp>
 
 
-namespace mastercraft::shader {
+namespace shader {
     
     class Uniform3uiv : public IUniform {
         
         public:
-        
+            
             using IUniform::IUniform;
             
             void load(const void *value) final;
     };
 }
 
-#endif //GA_PHYSICS_UNIFORM3uiv_HPP
+#endif //OPENGL_UNIFORM3uiv_HPP

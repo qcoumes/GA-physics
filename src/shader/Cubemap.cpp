@@ -1,17 +1,17 @@
 #include <shader/Cubemap.hpp>
 
 
-namespace mastercraft::shader {
+namespace shader {
     
-    Cubemap::Cubemap(std::unique_ptr<util::Image> texture[6]) {
+    Cubemap::Cubemap(std::unique_ptr<misc::Image> texture[6]) {
         glGenTextures(1, &this->textureId);
         
         glBindTexture(GL_TEXTURE_CUBE_MAP, this->textureId);
         
         for (GLuint i = 0; i < 6; i++) {
             glTexImage2D(
-                GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, static_cast<GLsizei>(texture[i]->getWidth()),
-                static_cast<GLsizei>(texture[i]->getHeight()), 0, GL_RGBA, GL_FLOAT, texture[i]->getPixels()
+                    GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, static_cast<GLsizei>(texture[i]->getWidth()),
+                    static_cast<GLsizei>(texture[i]->getHeight()), 0, GL_RGBA, GL_FLOAT, texture[i]->getPixels()
             );
         }
         

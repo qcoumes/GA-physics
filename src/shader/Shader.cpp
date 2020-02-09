@@ -1,13 +1,17 @@
 #include <algorithm>
 #include <stdexcept>
 #include <string>
+#include <iostream>
+#include <fstream>
+#include <cstring>
 
+#include <misc/Uuid.hpp>
 #include <shader/Shader.hpp>
 #include <shader/uniform/uniform_all.hpp>
-#include <util/FileReader.hpp>
+#include <misc/FileReader.hpp>
 
 
-namespace mastercraft::shader {
+namespace shader {
     
     static std::string getHeader(const std::string &driver) {
         std::string header;
@@ -70,13 +74,14 @@ namespace mastercraft::shader {
     
     
     Shader::Shader(const std::string &vsPath, const std::string &fsPath) :
-        programId(glCreateProgram()), vsId(glCreateShader(GL_VERTEX_SHADER)), fsId(glCreateShader(GL_FRAGMENT_SHADER)) {
-        const std::string vsSource = addVersion(util::FileReader::read(vsPath));
-        const std::string fsSource = addVersion(util::FileReader::read(fsPath));
+            programId(glCreateProgram()), vsId(glCreateShader(GL_VERTEX_SHADER)),
+            fsId(glCreateShader(GL_FRAGMENT_SHADER)) {
+        const std::string vsSource = addVersion(misc::FileReader::read(vsPath));
+        const std::string fsSource = addVersion(misc::FileReader::read(fsPath));
         const char *cVsSource = vsSource.c_str();
         const char *cFsSource = fsSource.c_str();
         GLint status;
-    
+        
         glShaderSource(this->vsId, 1, &cVsSource, nullptr);
         glShaderSource(this->fsId, 1, &cFsSource, nullptr);
         
@@ -84,14 +89,14 @@ namespace mastercraft::shader {
         glGetShaderiv(this->vsId, GL_COMPILE_STATUS, &status);
         if (status != GL_TRUE) {
             throw std::runtime_error(
-                "Failed to compile vertex shader (from file '" + vsPath + "'): " + getShaderInfoLog(this->vsId)
+                    "Failed to compile vertex shader (from file '" + vsPath + "'): " + getShaderInfoLog(this->vsId)
             );
         }
         glCompileShader(this->fsId);
         glGetShaderiv(this->fsId, GL_COMPILE_STATUS, &status);
         if (status != GL_TRUE) {
             throw std::runtime_error(
-                "Failed to compile fragment shader (from file '" + fsPath + "'): " + getShaderInfoLog(this->fsId)
+                    "Failed to compile fragment shader (from file '" + fsPath + "'): " + getShaderInfoLog(this->fsId)
             );
         }
         
@@ -102,7 +107,7 @@ namespace mastercraft::shader {
         glGetProgramiv(this->programId, GL_LINK_STATUS, &status);
         if (status != GL_TRUE) {
             throw std::runtime_error(
-                "Failed to link shaders'" + vsPath + "' and '" + fsPath + "': " + getProgramInfoLog(this->programId)
+                    "Failed to link shaders'" + vsPath + "' and '" + fsPath + "': " + getProgramInfoLog(this->programId)
             );
         }
     }
@@ -181,7 +186,7 @@ namespace mastercraft::shader {
     }
     
     
-    void Shader::loadUniform(const std::string &name, const void *value) {
+    void Shader::loadUniform(const std::string &name, const void *value) const {
         try {
             this->uniforms.at(name)->load(value);
         } catch (const std::out_of_range &) {

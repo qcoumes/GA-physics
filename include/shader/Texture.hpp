@@ -1,28 +1,32 @@
-#ifndef GA_PHYSICS_TEXTURE_HPP
-#define GA_PHYSICS_TEXTURE_HPP
+#ifndef OPENGL_TEXTURE_HPP
+#define OPENGL_TEXTURE_HPP
 
 #include <memory>
 
 #include <GL/glew.h>
 
-#include <util/INonCopyable.hpp>
-#include <util/Image.hpp>
+#include <misc/INonCopyable.hpp>
+#include <misc/Image.hpp>
 
 
-namespace mastercraft::shader {
+namespace shader {
     
-    class Texture : public util::INonCopyable {
+    class Texture {
         private:
             GLuint textureId = 0;
+            
+            explicit Texture(GLuint textureId);
         
         public:
             
             Texture() = default;
             
-            explicit Texture(const util::Image *texture);
+            explicit Texture(const misc::Image *texture);
             
-            [[nodiscard]] GLuint getTextureId() const;
+            void bind() const;
+            
+            void unbind() const;
     };
 }
 
-#endif //GA_PHYSICS_TEXTURE_HPP
+#endif //OPENGL_TEXTURE_HPP

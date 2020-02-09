@@ -1,17 +1,17 @@
-#ifndef GA_PHYSICS_CUBEMAP_HPP
-#define GA_PHYSICS_CUBEMAP_HPP
+#ifndef OPENGL_CUBEMAP_HPP
+#define OPENGL_CUBEMAP_HPP
 
 #include <memory>
 
 #include <GL/glew.h>
 
-#include <util/INonCopyable.hpp>
-#include <util/Image.hpp>
+#include <misc/INonCopyable.hpp>
+#include <misc/Image.hpp>
 
 
-namespace mastercraft::shader {
+namespace shader {
     
-    class Cubemap : public util::INonCopyable {
+    class Cubemap : public misc::INonCopyable {
         private:
             GLuint textureId = 0;
         
@@ -19,10 +19,10 @@ namespace mastercraft::shader {
             
             Cubemap() = default;
             
-            explicit Cubemap(std::unique_ptr<util::Image> texture[6]);
+            explicit Cubemap(std::unique_ptr<misc::Image> texture[6]);
             
             [[nodiscard]] GLuint getCubemapId() const;
     };
 }
 
-#endif // GA_PHYSICS_CUBEMAP_HPP
+#endif // OPENGL_CUBEMAP_HPP

@@ -1,6 +1,6 @@
-# Clion's files
-.idea/
-cmake-build-debug/
+# Clion
+.idea
+cmake-build-debug
 
 # Prerequisites
 *.d

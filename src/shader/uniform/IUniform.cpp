@@ -3,10 +3,10 @@
 #include <shader/uniform/IUniform.hpp>
 
 
-namespace mastercraft::shader {
+namespace shader {
     
     IUniform::IUniform(GLuint t_program, const GLchar *t_name) :
-        name(t_name), program(t_program) {
+            name(t_name), program(t_program) {
         
         this->location = glGetUniformLocation(t_program, t_name);
         if (this->location == -1) {

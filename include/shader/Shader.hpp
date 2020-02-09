@@ -1,18 +1,18 @@
-#ifndef GA_PHYSICS_SHADER_HPP
-#define GA_PHYSICS_SHADER_HPP
+#ifndef OPENGL_SHADER_HPP
+#define OPENGL_SHADER_HPP
 
 #include <string>
 #include <vector>
 #include <memory>
 #include <unordered_map>
 
-#include <util/INonCopyable.hpp>
+#include <misc/INonCopyable.hpp>
 #include <shader/uniform/IUniform.hpp>
 
 
-namespace mastercraft::shader {
+namespace shader {
     
-    class Shader : public util::INonCopyable {
+    class Shader : public misc::INonCopyable {
         protected:
             std::unordered_map<std::string, std::shared_ptr<IUniform>> uniforms;
             GLuint programId;
@@ -24,12 +24,12 @@ namespace mastercraft::shader {
             Shader() = default;
             
             Shader(const std::string &vsPath, const std::string &fsPath);
-        
+            
             ~Shader();
             
             void addUniform(const std::string &name, UniformType type);
             
-            void loadUniform(const std::string &name, const void* value);
+            void loadUniform(const std::string &name, const void *value) const;
             
             void use() const;
             
@@ -37,5 +37,5 @@ namespace mastercraft::shader {
     };
 }
 
-#endif // GA_PHYSICS_SHADER_HPP
+#endif // OPENGL_SHADER_HPP
 

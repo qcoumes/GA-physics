@@ -1,10 +1,10 @@
-#ifndef GA_PHYSICS_UNIFORM1FV_HPP
-#define GA_PHYSICS_UNIFORM1FV_HPP
+#ifndef OPENGL_UNIFORM1FV_HPP
+#define OPENGL_UNIFORM1FV_HPP
 
 #include <shader/uniform/IUniform.hpp>
 
 
-namespace mastercraft::shader {
+namespace shader {
     
     class Uniform1fv : public IUniform {
         
@@ -16,4 +16,4 @@ namespace mastercraft::shader {
     };
 }
 
-#endif //GA_PHYSICS_UNIFORM1FV_HPP
+#endif //OPENGL_UNIFORM1FV_HPP

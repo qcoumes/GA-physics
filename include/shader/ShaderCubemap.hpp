@@ -1,11 +1,11 @@
-#ifndef GA_PHYSICS_SHADERCUBEMAP_HPP
-#define GA_PHYSICS_SHADERCUBEMAP_HPP
+#ifndef OPENGL_SHADERCUBEMAP_HPP
+#define OPENGL_SHADERCUBEMAP_HPP
 
 #include <shader/Shader.hpp>
 #include <shader/Cubemap.hpp>
 
 
-namespace mastercraft::shader {
+namespace shader {
     
     class ShaderCubemap : public Shader {
         private:
@@ -23,5 +23,5 @@ namespace mastercraft::shader {
     };
 }
 
-#endif // GA_PHYSICS_SHADERCUBEMAP_HPP
+#endif // OPENGL_SHADERCUBEMAP_HPP
 

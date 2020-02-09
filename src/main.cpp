@@ -1,5 +1,25 @@
+#include <app/Engine.hpp>
+
+
+using namespace app;
 
 
 int main(int argc, char **argv) {
-    return 0;
+    Engine *game = Engine::getInstance();
+    
+    game->init();
+    game->update();
+    
+    while (game->isRunning()) {
+        if (game->tick()) {
+            game->update();
+        }
+        
+        game->render();
+    }
+    
+    game->cleanup();
+    
+    return EXIT_SUCCESS;
 }
+

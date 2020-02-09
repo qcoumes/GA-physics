@@ -1,19 +1,19 @@
-#ifndef GA_PHYSICS_UNIFORMMATRIX24_HPP
-#define GA_PHYSICS_UNIFORMMATRIX24_HPP
+#ifndef OPENGL_UNIFORMMATRIX24_HPP
+#define OPENGL_UNIFORMMATRIX24_HPP
 
 #include <shader/uniform/IUniform.hpp>
 
 
-namespace mastercraft::shader {
+namespace shader {
     
     class UniformMatrix2x4fv : public IUniform {
         
         public:
-        
+            
             using IUniform::IUniform;
             
             void load(const void *value) final;
     };
 }
 
-#endif //GA_PHYSICS_UNIFORMMATRIX24_HPP
+#endif //OPENGL_UNIFORMMATRIX24_HPP

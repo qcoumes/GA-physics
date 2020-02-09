@@ -1,11 +1,11 @@
-#ifndef GA_PHYSICS_SHADERTEXTURE_HPP
-#define GA_PHYSICS_SHADERTEXTURE_HPP
+#ifndef OPENGL_SHADERTEXTURE_HPP
+#define OPENGL_SHADERTEXTURE_HPP
 
 #include <shader/Shader.hpp>
 #include <shader/Texture.hpp>
 
 
-namespace mastercraft::shader {
+namespace shader {
     
     class ShaderTexture : public Shader {
         private:
@@ -23,5 +23,5 @@ namespace mastercraft::shader {
     };
 }
 
-#endif // GA_PHYSICS_SHADERTEXTURE_HPP
+#endif // OPENGL_SHADERTEXTURE_HPP
 

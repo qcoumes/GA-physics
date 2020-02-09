@@ -1,11 +1,11 @@
 #include <shader/ShaderCubemap.hpp>
 
 
-namespace mastercraft::shader {
+namespace shader {
     
     ShaderCubemap::ShaderCubemap(const std::string &vsFile, const std::string &fsFile) :
-        Shader(vsFile, fsFile) {
-         this->uTexture = glGetUniformLocation(this->programId, "uTexture");
+            Shader(vsFile, fsFile) {
+        this->uTexture = glGetUniformLocation(this->programId, "uTexture");
     }
     
     

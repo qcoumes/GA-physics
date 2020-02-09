@@ -1,5 +1,5 @@
-#ifndef GA_PHYSICS_UNIFORM_ALL_HPP
-#define GA_PHYSICS_UNIFORM_ALL_HPP
+#ifndef OPENGL_UNIFORM_ALL_HPP
+#define OPENGL_UNIFORM_ALL_HPP
 
 #include <shader/uniform/IUniform.hpp>
 
@@ -29,4 +29,5 @@
 #include <shader/uniform/UniformMatrix4x3fv.hpp>
 #include <shader/uniform/UniformMatrix4x2fv.hpp>
 
-#endif //GA_PHYSICS_UNIFORM_ALL_HPP
+
+#endif //OPENGL_UNIFORM_ALL_HPP
