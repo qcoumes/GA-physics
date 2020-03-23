@@ -72,9 +72,9 @@ Note that controls are given for a QWERTY` layout, they should adapt to your lay
 
 ### Transformations
 
-In **CGA**, transformations are done through **Versors** and are based on the geometric product of vectors, such transformations correspond to this algebra's characteristic "***sandwich***" operations. Wan can apply a **Versor** `V` to an object `x` by `sandwiching` it with it's dual (`!V`):  `V * x * !V`.
+In **CGA**, transformations are done through **Versors** and are based on the geometric product of vectors, such transformations correspond to this algebra's characteristic "***sandwich***" operations. Wan can apply a **Versor** `V` to an object `x` by `sandwiching` it with it's inverse: `V * x * V.inv()`.
 
-In this application, this is done with the *Functor* [`Versor<T>`](include/app/Versor.hpp), witch shortcut static factory such as:
+In this application, this is done with the *Functor* [`Versor<T>`](include/app/Versor.hpp), which contains shortcut static factory such as:
 
 * `Versor<T> dilator(T factor);`
             
