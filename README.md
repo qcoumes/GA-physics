@@ -73,9 +73,9 @@ Note that controls are given for a QWERTY` layout, they should adapt to your lay
 
 ### Transformations
 
-In **CGA**, transformations are done through **Versors** and are based on the geometric product of vectors, such transformations correspond to this algebra's characteristic "***sandwich***" operations. For a **Versor** `V`, we applied it to an object `x` like this: `x' = VxV⁻¹`.
+In **CGA**, transformations are done through **Versors** and are based on the geometric product of vectors, such transformations correspond to this algebra's characteristic "***sandwich***" operations. For a **Versor** `V`, we apply it to an object `x` like this: `x' = VxV⁻¹`.
 
-In this application, this is done with the *Functor* [`Versor<T>`](https://github.com/qcoumes/ga-bounce/blob/master/include/app/Versor.hpp), witch shortcut static factory such as:
+In this application, this is done with the *Functor* [`Versor<T>`](include/app/Versor.hpp), witch shortcut static factory such as:
 
 * `Versor<T> dilator(T factor);`
             
@@ -127,3 +127,5 @@ glm::vec3 bPos = { b0[c3ga::E1], b0[c3ga::E2], b0[c3ga::E3] };
 glm::vec3 cPos = { c0[c3ga::E1], c0[c3ga::E2], c0[c3ga::E3] };
 glm::vec3 dPos = { d0[c3ga::E1], d0[c3ga::E2], d0[c3ga::E3] };
 ```
+
+The face can now be rendered like any other object in *OpenGL*.
