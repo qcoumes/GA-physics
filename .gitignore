@@ -2,6 +2,9 @@
 .idea
 cmake-build-debug
 
+# GhostWriter
+*.backup
+
 # Prerequisites
 *.d
 

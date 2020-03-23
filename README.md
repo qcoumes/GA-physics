@@ -1,18 +1,28 @@
 # GA Bounce
 
-Little repository demonstrating the basic transformation in Conformal Geometric Algebra (CGA).
 
-## Prerequisites
+## Introduction
 
-To run *GA Bounce*, you need:
+The goal of this project is to demonstrate the possibilities offered by **Conformal geometric algebra** (***CGA***) in computer graphics. It try to present every **basic transformations** such as *translation*, *rotation*, *scale* and *reflection*, done through **CGA**, as well as a quick way to convert **CGA** to displayable data.
+
+To achieve all these goals this, we used a **CGA** C++ library generated through [Garamon](https://github.com/vincentnozick/garamon) using [c3ga config file](https://github.com/vincentnozick/garamon/blob/master/conf/c3ga.conf), and **OpenGL* for the rendering.
+
+The application consists of an arena made of **CGA** planes in which you can throw bouncing ball (**CGA** spheres) around.
+
+
+## Usage
+
+### Prerequisites
 
 * `CMake >= 3.7`
 * `SDL2 >= 2.0.2`
 * `OpenGL >= 3.3`
 * `GLEW >= 2.1.0`
+* `eigen3 >= 3.3.0`
 
+All other needed libraries is included in the repository.
 
-## Compilation
+### Compilation
 
 The compilation is done through `CMake` :
 
@@ -29,4 +39,91 @@ The program is launch with the compiled executable `ga_bounce`.
 
 ```
 ./ga_bounce
+```
+
+### Controls: 
+
+* Movement :
+
+    * `W` : Move forward.
+    * `S` : Move backward.
+    * `A` : Strafe left.
+    * `D` : Straft right.  
+    * `CTRL` : Move downward.
+    * `SPACE` : Move upward.  
+    * Use the mouse to look around.
+
+* Ball :
+	* `LEFT BUTTON` : Throw a ball.
+    * `MOUSE WHEEL` : Change the speed of the ball.
+    * `RIGHT CLICK` + `MOUSE WHEEL` : Change the size of the ball.
+    * `MIDDLE CLICK` + `MOUSE WHEEL` : Change the number of bounces before a ball disappear.
+
+* Others :  
+	* `F10` : Switch debug information display.
+	* `ALT` : Free mouse (allow to interact with debug display)  .
+	* `ESC` To exit the application.
+
+Balls's settings can also be changed on the debug display once the mouse has been freed.
+
+Note that controls are given for a QWERTY` layout, they should adapt to your layout.
+
+
+## Implementation
+
+### Transformations
+
+In **CGA**, transformations are done through **Versors** and are based on the geometric product of vectors, such transformations correspond to this algebra's characteristic "***sandwich***" operations. For a **Versor** `V`, we applied it to an object `x` like this: `x' = VxV⁻¹`.
+
+In this application, this is done with the *Functor* [`Versor<T>`](https://github.com/qcoumes/ga-bounce/blob/master/include/app/Versor.hpp), witch shortcut static factory such as:
+
+* `Versor<T> dilator(T factor);`
+            
+* `Versor<T> rotor(const c3ga::Mvec<T> &bivector, double angle);`
+
+* `Versor<T> translator(const c3ga::Mvec<T> &vector);`
+
+* `Versor<T> translator(T x, T y, T z);`
+
+`Versor<T>` can be applied on `const c3ga::Mvec<T>` or other `Versor<T>`.
+
+
+### Arena
+
+The arena is the inside of an [elongated square gyrobicupola](https://en.wikipedia.org/wiki/Elongated_square_gyrobicupola).
+
+![](assets/doc/elongated_square_gyrobicupola.png)
+
+Since the elongated square gyrobicupola can be assimilated to a low-poly sphere, each plane corresponding to each face does not intersect witch each other inside the arena, but only on the outside. This result in the possibility to use these planes in **CGA** for collision detection and reflection computation between the surface of the arena and the balls.
+
+An *elongated square gyrobicupola* is composed 26 faces : 18 squares and 8 triangles. The implementation of the classes representing these type of faces are quite similar, they are composed of **3 points** for the Triangle, and **4 points** for the Square, **a plane** computed from the *wedge* of 3 of these points, and a **normal** computed from the *geometric product* of the plane and one of the points :
+
+E.G. for the square :
+```cpp
+c3ga::Mvec<GLfloat> a, b, c, d; // 4 CGA points
+c3ga::Mvec<GLfloat> plane = a ^ b ^ c ^ c3ga::ei<GLfloat>();
+c3ga::Mvec<GLfloat> normal = plane * a;
+```
+
+
+The entire arena can be builded with only 4 points, to which we apply *translator* and *rotor*. Example of such transformations can be found in [`src/app/object/Arena.cpp`](https://github.com/qcoumes/ga-bounce/blob/master/src/app/object/Arena.cpp#L13).
+
+Once every face is done and properly placed, we can retrieve the corresponding vertices in Euclidean Space (to use in *OpenGL*) as follow :
+
+```cpp
+// Retriving normal in euclidean space
+c3ga::Mvec<GLfloat> orientation = (c3ga::ei<GLfloat>() | (!normal)) ^ c3ga::ei<GLfloat>();
+orientation = orientation | c3ga::e0<GLfloat>();
+orientation /= orientation.norm();
+glm::vec3 euclideanNormal = { orientation[c3ga::E1], orientation[c3ga::E2], orientation[c3ga::E3] };
+
+// Retriving vertices position in euclidean space
+c3ga::Mvec<GLfloat> a0 = a / a[c3ga::E0];
+c3ga::Mvec<GLfloat> b0 = b / b[c3ga::E0];
+c3ga::Mvec<GLfloat> c0 = c / c[c3ga::E0];
+c3ga::Mvec<GLfloat> d0 = d / d[c3ga::E0];
+glm::vec3 aPos = { a0[c3ga::E1], a0[c3ga::E2], a0[c3ga::E3] };
+glm::vec3 bPos = { b0[c3ga::E1], b0[c3ga::E2], b0[c3ga::E3] };
+glm::vec3 cPos = { c0[c3ga::E1], c0[c3ga::E2], c0[c3ga::E3] };
+glm::vec3 dPos = { d0[c3ga::E1], d0[c3ga::E2], d0[c3ga::E3] };
 ```
