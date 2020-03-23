@@ -42,7 +42,6 @@ namespace app {
         
         glEnable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
         this->shader = std::make_shared<shader::ShaderTexture>(
@@ -222,7 +221,7 @@ namespace app {
         GLint length;
         
         this->imGui->newFrame();
-        ImGui::SetNextWindowSize({ 600, 500 }, ImGuiCond_Once);
+        ImGui::SetNextWindowSize({ 600, 550 }, ImGuiCond_Once);
         
         ImGui::Begin("Debug");
         ImGui::Text("FPS: %d /", Stats::getInstance()->fps);
@@ -250,7 +249,7 @@ namespace app {
         ImGui::Text("Looking at: (%.2f, %.2f, %.2f)", lookingAt.x, lookingAt.y, lookingAt.z);
         ImGui::Dummy({ 0.0f, 6.0f });
         
-        ImGui::Text("CONTROLES:");
+        ImGui::Text("CONTROLS:");
         ImGui::BulletText("W, A, S, D, CTL, SPACE : Move the camera.");
         ImGui::BulletText("LEFT CLICK: Throw a ball.");
         ImGui::BulletText("MOUSE WHEEL: Change the speed of the ball.");
@@ -262,11 +261,14 @@ namespace app {
                 "Once the mouse is freed, you can modify speed, size and bounce\n"
                 "directly with the sliders below."
         );
+        ImGui::Dummy({ 0.0f, 3.0f });
+        ImGui::Text(
+                "Controls are given for a QWERTY layout, they should adapt to\n"
+                "your keyboard layout."
+        );
         ImGui::Dummy({ 0.0f, 6.0f });
         
         if (ImGui::CollapsingHeader("Projectiles", ImGuiTreeNodeFlags_DefaultOpen)) {
-            ImGui::Text("Changes are only applied to new balls.");
-            
             GLfloat speed = config->getProjSpeed(), size = config->getProjSize();
             GLint bounce = config->getProjBounce();
             if (ImGui::SliderFloat("Speed", &speed, 0.3f, 3.f)) {
@@ -278,6 +280,9 @@ namespace app {
             if (ImGui::SliderInt("Bounce", &bounce, 1, 20)) {
                 config->setProjBounce(bounce);
             }
+            ImGui::Dummy({ 0.0f, 3.0f });
+            ImGui::Text("Changes are only applied to new balls.");
+            ImGui::Dummy({ 0.0f, 3.0f });
             ImGui::Text(
                     "Note that if a ball is too small and too fast, it could move through\n"
                     "a wall before the collision is checked."

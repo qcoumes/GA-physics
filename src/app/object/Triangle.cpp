@@ -37,7 +37,7 @@ namespace app::object {
     
     
     c3ga::Mvec<GLfloat> Triangle::collide(c3ga::Mvec<GLfloat> mvec) {
-        c3ga::Mvec<GLfloat> collision = !mvec | this->plane;
+        c3ga::Mvec<GLfloat> collision = (!mvec) | this->plane;
         if ((collision | collision) >= 0.f) {
             return this->plane;
         }

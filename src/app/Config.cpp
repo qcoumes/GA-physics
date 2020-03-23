@@ -27,7 +27,7 @@ namespace app {
         );
         this->setFramerate(Framerate::FRAMERATE_VSYNC);
         this->setFov(70, window, camera);
-        this->setFaceCulling(false);
+        this->setFaceCulling(true);
         
         SDL_DisplayMode display = window.getDisplayMode();
         this->width = display.w;

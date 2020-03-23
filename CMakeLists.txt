@@ -86,6 +86,7 @@ ENDIF ()
 TARGET_COMPILE_OPTIONS(
     ${TARGET_NAME} PRIVATE
     -Wno-unused-parameter
+    -Wno-sign-compare
     -Wno-shadow
 )
 IF (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
@@ -101,7 +102,6 @@ ELSEIF (CMAKE_CXX_COMPILER_ID MATCHES "[Cc]lang")
         -Wno-unknown-pragmas
         -Wno-exit-time-destructors
         -Wno-sign-conversion
-        -Wno-sign-compare
     )
     IF (CMAKE_CXX_COMPILER_VERSION VERSION_LESS "9.0.0")
     ELSE ()

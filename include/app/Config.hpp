@@ -58,8 +58,8 @@ namespace app {
             GLboolean frustumCulling = true;   /**< Whether frustum culling is enabled. */
             GLboolean debug = true;           /**< Whether debug display. */
             
-            GLfloat projSpeed = 1.f; /**< Speed of projectiles. */
-            GLfloat projSize = 1.f;     /**< Size of projectiles. */
+            GLfloat projSpeed = 2.f; /**< Speed of projectiles. */
+            GLfloat projSize = 4.f;     /**< Size of projectiles. */
             GLuint projBounce = 4;    /**< Number of bounce before projectile disappear. */
             
             Config() = default;
