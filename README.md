@@ -1,8 +1,6 @@
 # GA Bounce
 
 
-## Introduction
-
 The goal of this project is to demonstrate the possibilities offered by **Conformal geometric algebra** (***CGA***) in computer graphics. It try to present every **basic transformations** such as *translation*, *rotation*, *scale* and *reflection*, done through **CGA**, as well as a quick way to convert **CGA** to displayable data.
 
 To achieve all these goals this, we used a **CGA** C++ library generated through [Garamon](https://github.com/vincentnozick/garamon) using [c3ga config file](https://github.com/vincentnozick/garamon/blob/master/conf/c3ga.conf), and **OpenGL* for the rendering.
@@ -71,9 +69,10 @@ Note that controls are given for a QWERTY` layout, they should adapt to your lay
 
 ## Implementation
 
+
 ### Transformations
 
-In **CGA**, transformations are done through **Versors** and are based on the geometric product of vectors, such transformations correspond to this algebra's characteristic "***sandwich***" operations. For a **Versor** `V`, we apply it to an object `x` like this: `x' = VxV⁻¹`.
+In **CGA**, transformations are done through **Versors** and are based on the geometric product of vectors, such transformations correspond to this algebra's characteristic "***sandwich***" operations. Wan can apply a **Versor** `V` to an object `x` by `sandwiching` it with it's dual (`!V`):  `V * x * !V`.
 
 In this application, this is done with the *Functor* [`Versor<T>`](include/app/Versor.hpp), witch shortcut static factory such as:
 
@@ -106,7 +105,7 @@ c3ga::Mvec<GLfloat> normal = plane * a;
 ```
 
 
-The entire arena can be builded with only 4 points, to which we apply *translator* and *rotor*. Example of such transformations can be found in [`src/app/object/Arena.cpp`](https://github.com/qcoumes/ga-bounce/blob/master/src/app/object/Arena.cpp#L13).
+The entire arena can be builded with only 4 points, to which we apply *translator* and *rotor*. Example of such transformations can be found in [`src/app/object/Arena.cpp`](src/app/object/Arena.cpp).
 
 Once every face is done and properly placed, we can retrieve the corresponding vertices in Euclidean Space (to use in *OpenGL*) as follow :
 
@@ -129,3 +128,42 @@ glm::vec3 dPos = { d0[c3ga::E1], d0[c3ga::E2], d0[c3ga::E3] };
 ```
 
 The face can now be rendered like any other object in *OpenGL*.
+
+
+### Projectile
+
+Projectiles are **CGA Sphere**, they can be modelized by a simple *multivector* resulting of the *wedge* of **4 CGA points**. To simplify transformations, we chose the four points so that the sphere is **centered at the origin** and have a **diameter of 1**, we then move the sphere to the camera position and dilate it with the current *size* settings. Since the projectile are moving, the class also store a **translator** built from the camera's *front vector* and the current *speed* settings :
+
+```cpp
+c3ga::Mvec<GLfloat> a = c3ga::point<GLfloat>(0.5f, 0, 0);
+c3ga::Mvec<GLfloat> b = c3ga::point<GLfloat>(-0.5f, 0, 0);
+c3ga::Mvec<GLfloat> c = c3ga::point<GLfloat>(0, 0.5f, 0);
+c3ga::Mvec<GLfloat> d = c3ga::point<GLfloat>(0, 0, 0.5f);
+        
+c3ga::Mvec<GLfloat> multivector = a ^ b ^ c ^ d;
+multivector = Versor<GLfloat>::dilator(size)(multivector);
+multivector = Versor<GLfloat>::translator(position.x, position.y, position.z)(multivector);
+translator = Versor<GLfloat>::translator(frontVector.x, frontVector.y, frontVector.z);
+```
+
+Like with the Square and Triangle, we can retrieve the corresponding vertices in Euclidean Space (to use in *OpenGL*) by computing the radius and center of the Sphere :
+
+```cpp
+c3ga::Mvec<GLfloat> dual = !this->multivector;
+dual /= dual[c3ga::E0];
+GLfloat radius = std::abs(std::sqrt(dual | dual));
+glm::vec3 center = { dual[c3ga::E1], dual[c3ga::E2], dual[c3ga::E3] };
+```
+
+and using the euclidean equation of a sphere.
+
+At each tick of the engine (60 per sec), the translator is applied to the sphere, and if a collision with the Arena occured, the new translator resulting of the reflection is computed.
+
+We can check that a collision occurred between a sphere and a plane by **checking the sign of the dual circle** resulting of the *inner product* of the dual of the sphere and the plane, and to compute the new translator, we can just *sandwich* the translator with the plane the sphere collided with : 
+
+```cpp
+c3ga::Mvec<GLfloat> collision = (!sphere) | plane;
+if ((collision | collision) >= 0.f) {
+    return translator = plane * translator * !plane;
+}
+```
