@@ -27,7 +27,7 @@ namespace app {
         );
         this->setFramerate(Framerate::FRAMERATE_VSYNC);
         this->setFov(70, window, camera);
-        this->setFaceCulling(true);
+        this->setFaceCulling(false);
         
         SDL_DisplayMode display = window.getDisplayMode();
         this->width = display.w;
@@ -35,6 +35,7 @@ namespace app {
         GLuint fps = static_cast<GLuint>(window.getDisplayMode().refresh_rate);
         this->vSyncFramerate = fps ? fps : 60;
         this->setFramerate(FRAMERATE_VSYNC);
+        this->setFreeMouse(false);
         
         struct cpu_raw_data_t raw {};
         struct cpu_id_t data {};
@@ -239,6 +240,20 @@ namespace app {
     }
     
     
+    GLboolean Config::getFreeMouse() const {
+        return freeMouse;
+    }
+    
+    void Config::setFreeMouse(GLboolean freeMouse) {
+        this->freeMouse = freeMouse;
+        SDL_SetRelativeMouseMode(freeMouse ? SDL_FALSE : SDL_TRUE);
+    }
+    
+    
+    void Config::switchFreeMouse() {
+        this->setFreeMouse(!this->freeMouse);
+    }
+    
     GLboolean Config::getFaceCulling() const {
         return faceCulling;
     }
@@ -246,11 +261,17 @@ namespace app {
     
     void Config::setFaceCulling(GLboolean faceCulling) {
         this->faceCulling = faceCulling;
+        if (faceCulling) {
+            glEnable(GL_CULL_FACE);
+        }
+        else {
+            glDisable(GL_CULL_FACE);
+        }
     }
     
     
     void Config::switchFaceCulling() {
-        this->faceCulling = !this->faceCulling;
+        this->setFaceCulling(!this->faceCulling);
     }
     
     
@@ -296,5 +317,35 @@ namespace app {
     
     void Config::switchDebug() {
         this->debug = !this->debug;
+    }
+    
+    
+    GLfloat Config::getProjSpeed() const {
+        return this->projSpeed;
+    }
+    
+    
+    void Config::setProjSpeed(GLfloat projSpeed) {
+        this->projSpeed = std::max(0.3f, std::min(3.f, projSpeed));
+    }
+    
+    
+    GLfloat Config::getProjSize() const {
+        return this->projSize;
+    }
+    
+    
+    void Config::setProjSize(GLfloat projSize) {
+        this->projSize = std::max(0.5f, std::min(10.f, projSize));
+    }
+    
+    
+    GLuint Config::getProjBounce() const {
+        return this->projBounce;
+    }
+    
+    
+    void Config::setProjBounce(GLuint projBounce) {
+        this->projBounce = std::max(1u, std::min(20u, projBounce));
     }
 }

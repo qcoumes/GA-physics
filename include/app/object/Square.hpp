@@ -1,27 +1,28 @@
-#ifndef OPENGL_WALL_HPP
-#define OPENGL_WALL_HPP
+#ifndef OPENGL_SQUARE_HPP
+#define OPENGL_SQUARE_HPP
 
 #include <GL/glew.h>
 #include <c3ga/Mvec.hpp>
 
-#include <tool/Rendered.hpp>
 #include <shader/ShaderTexture.hpp>
 #include <shader/Texture.hpp>
+#include <app/object/ObjectC3GA.hpp>
 
 
 namespace app::object {
     
-    class Wall : public tool::Rendered {
+    class Square : public ObjectC3GA {
         
         private:
             static constexpr GLuint VERTEX_ATTR_POSITION = 0;
             static constexpr GLuint VERTEX_ATTR_NORMAL = 1;
             static constexpr GLuint VERTEX_ATTR_TEXTURE = 2;
             
-            shader::ShaderTexture shader;
-            shader::Texture texture;
+            std::shared_ptr<shader::ShaderTexture> shader;
+            std::shared_ptr<shader::Texture> texture;
             
             c3ga::Mvec<GLfloat> plane;
+            c3ga::Mvec<GLfloat> normal;
             c3ga::Mvec<GLfloat> a;
             c3ga::Mvec<GLfloat> b;
             c3ga::Mvec<GLfloat> c;
@@ -33,16 +34,19 @@ namespace app::object {
         
         public:
             
-            Wall();
+            Square(c3ga::Mvec<GLfloat> a, c3ga::Mvec<GLfloat> b, c3ga::Mvec<GLfloat> c, c3ga::Mvec<GLfloat> d,
+                   std::shared_ptr<shader::ShaderTexture> shader, std::shared_ptr<shader::Texture> texture);
             
-            ~Wall() override;
+            ~Square() override;
             
             void transform(const Versor<GLfloat> &versor) override;
-            
-            void update() override;
+        
+            [[nodiscard]] c3ga::Mvec<GLfloat> collide(c3ga::Mvec<GLfloat> mvec) override;
+        
+            bool update() override;
             
             void render() const override;
     };
 }
 
-#endif //OPENGL_WALL_HPP
+#endif //OPENGL_SQUARE_HPP

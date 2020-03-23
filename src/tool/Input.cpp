@@ -71,7 +71,7 @@ namespace tool {
     
     
     void Input::reset() {
-        for (auto entry: this->buttons) {
+        for (auto &entry: this->buttons) {
             entry.second.reset();
         }
         for (auto &entry: this->keys) {

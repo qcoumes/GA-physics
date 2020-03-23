@@ -27,7 +27,6 @@ vec3 computeDiffuseLighting() {
 
 void main() {
     vec4 textureColor = texture(uTexture, vTexture);
-//    vec4 textureColor = vec4(1, 0, 0, 1);
     if (textureColor.w == 0.f) {
         discard;
     }

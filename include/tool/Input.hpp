@@ -50,11 +50,11 @@ namespace tool {
     class Input : public misc::INonCopyable {
         
         private:
-            std::unordered_map<SDL_Scancode, InputState> keys; /** InputState of every keyboard's keys. */
-            std::unordered_map<uint8_t, InputState> buttons;   /** InputState of every mouse's buttons. */
-            glm::vec2 mouseMotion = { 0, 0 }; /** Relative motion of the mouse. */
-            glm::vec2 wheelMotion = { 0, 0 }; /** Relative motion of the wheel. */
-            GLboolean end = false; /** Whether SDL_QUIT has occured. */
+            std::unordered_map<SDL_Scancode, InputState> keys; /**< InputState of every keyboard's keys. */
+            std::unordered_map<uint8_t, InputState> buttons;   /**< InputState of every mouse's buttons. */
+            glm::vec2 mouseMotion = { 0, 0 }; /**< Relative motion of the mouse. */
+            glm::vec2 wheelMotion = { 0, 0 }; /**< Relative motion of the wheel. */
+            GLboolean end = false; /**< Whether SDL_QUIT has occured. */
             
             
             void handleMouseMotion(const SDL_MouseMotionEvent &event);

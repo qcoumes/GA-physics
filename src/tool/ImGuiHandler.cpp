@@ -30,7 +30,7 @@ namespace tool {
         ImGui::StyleColorsDark();
         
         this->io = ImGui::GetIO();
-        
+        this->io.ConfigFlags |= ImGuiConfigFlags_NoMouse;
         ImGui_ImplSDL2_InitForOpenGL(window, context);
         ImGui_ImplOpenGL3_Init(glsl_version);
     }
@@ -68,6 +68,18 @@ namespace tool {
     
     bool ImGuiHandler::wantCaptureKeyboard() {
         return io.WantCaptureKeyboard;
+    }
+    
+    
+    void ImGuiHandler::HelpMarker(const char *desc) {
+        ImGui::TextDisabled("(?)");
+        if (ImGui::IsItemHovered()) {
+            ImGui::BeginTooltip();
+            ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+            ImGui::TextUnformatted(desc);
+            ImGui::PopTextWrapPos();
+            ImGui::EndTooltip();
+        }
     }
 }
 

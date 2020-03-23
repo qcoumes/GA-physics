@@ -95,4 +95,9 @@ namespace tool {
     glm::mat4 Camera::getProjMatrix() const {
         return this->projMatrix;
     }
+    
+    
+    glm::vec3 Camera::getFrontVector() const {
+        return this->frontVector;
+    }
 }

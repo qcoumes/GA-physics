@@ -30,6 +30,8 @@ namespace tool {
             [[nodiscard]] bool wantCaptureMouse();
             
             [[nodiscard]] bool wantCaptureKeyboard();
+            
+            static void HelpMarker(const char *desc);
     };
 }
 

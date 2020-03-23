@@ -43,8 +43,8 @@ namespace app {
             GLint width;  /**< Width of the window. */
             GLint height; /**< Height of the window. */
             
-            GLfloat mouseSensitivity = 0.50f; /**< Sensitivity of the mouse. */
-            GLfloat speed = 0.1f; /**< Speed of the camera. */
+            GLfloat mouseSensitivity = 1.f; /**< Sensitivity of the mouse. */
+            GLfloat speed = 0.6f;      /**< Speed of the camera. */
             GLfloat fov = 70;          /**< Field of view, default to 70. */
             
             GLuint framerate = 0;      /**< Framerate value. */
@@ -52,10 +52,15 @@ namespace app {
             GLuint usPerFrame = 0;     /**< Number of microseconds between frame. */
             Framerate framerateOpt = Framerate::FRAMERATE_VSYNC;  /**< Chosen Framerate. */
             
+            GLboolean freeMouse = false;       /**< Allow to freely move the mouse. */
             GLboolean faceCulling = true;      /**< Whether face culling is enabled. */
             GLboolean occlusionCulling = true; /**< Whether occlusion culling is enabled. */
             GLboolean frustumCulling = true;   /**< Whether frustum culling is enabled. */
-            GLboolean debug = false;           /**< Whether debug display. */
+            GLboolean debug = true;           /**< Whether debug display. */
+            
+            GLfloat projSpeed = 1.f; /**< Speed of projectiles. */
+            GLfloat projSize = 1.f;     /**< Size of projectiles. */
+            GLuint projBounce = 4;    /**< Number of bounce before projectile disappear. */
             
             Config() = default;
         
@@ -79,6 +84,10 @@ namespace app {
             
             void setFov(GLfloat fov, const tool::Window &window, tool::Camera &camera);
             
+            void setFreeMouse(GLboolean freeMouse);
+            
+            void switchFreeMouse();
+            
             void setFaceCulling(GLboolean faceCulling);
             
             void switchFaceCulling();
@@ -94,6 +103,12 @@ namespace app {
             void setDebug(GLboolean debug);
             
             void switchDebug();
+        
+            void setProjSpeed(GLfloat projSpeed);
+            
+            void setProjSize(GLfloat projSize);
+            
+            void setProjBounce(GLuint projBounce);
             
             [[nodiscard]] std::string getGPUInfo() const;
             
@@ -123,6 +138,8 @@ namespace app {
             
             [[nodiscard]] GLfloat getFov() const;
             
+            [[nodiscard]] GLboolean getFreeMouse() const;
+            
             [[nodiscard]] GLboolean getFaceCulling() const;
             
             [[nodiscard]] GLboolean getOcclusionCulling() const;
@@ -130,6 +147,12 @@ namespace app {
             [[nodiscard]] GLboolean getFrustumCulling() const;
             
             [[nodiscard]] GLboolean getDebug() const;
+        
+            [[nodiscard]] GLfloat getProjSpeed() const;
+           
+            [[nodiscard]] GLfloat getProjSize() const;
+           
+            [[nodiscard]] GLuint getProjBounce() const;
     };
 }
 
