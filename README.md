@@ -93,7 +93,7 @@ The arena is the inside of an [elongated square gyrobicupola](https://en.wikiped
 
 ![](assets/doc/elongated_square_gyrobicupola.png)
 
-Since the elongated square gyrobicupola can be assimilated to a low-poly sphere, each plane corresponding to each face does not intersect witch each other inside the arena, but only on the outside. This result in the possibility to use these planes in **CGA** for collision detection and reflection computation between the surface of the arena and the balls.
+Since the elongated square gyrobicupola is convex, each plane corresponding to each face does not intersect witch each other inside the arena, but only on the outside. This result in the possibility to use these planes in **CGA** for collision detection and reflection computation between the surface of the arena and the balls.
 
 An *elongated square gyrobicupola* is composed 26 faces : 18 squares and 8 triangles. The implementation of the classes representing these type of faces are quite similar, they are composed of **3 points** for the Triangle, and **4 points** for the Square, **a plane** computed from the *wedge* of 3 of these points, and a **normal** computed from the *geometric product* of the plane and one of the points :
 
