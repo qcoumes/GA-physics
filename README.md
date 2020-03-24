@@ -164,6 +164,6 @@ We can check that a collision occurred between a sphere and a plane by **checkin
 ```cpp
 c3ga::Mvec<GLfloat> collision = (!sphere) | plane;
 if ((collision | collision) >= 0.f) {
-    return translator = plane * translator * !plane;
+    translator = plane * translator * !plane;
 }
 ```
