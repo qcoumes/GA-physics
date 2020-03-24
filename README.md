@@ -1,11 +1,11 @@
 # GA Bounce
 
 
-The goal of this project is to demonstrate the possibilities offered by **Conformal geometric algebra** (***CGA***) in computer graphics. It try to present every **basic transformations** such as *translation*, *rotation*, *scale* and *reflection*, done through **CGA**, as well as a quick way to convert **CGA** to displayable data.
+The goal of this project is to demonstrate the possibilities offered by **Conformal geometric algebra** (***CGA***) in computer graphics. It tries to present every **basic transformation** such as *translation*, *rotation*, *scale* and *reflection*, done through **CGA**, as well as a quick way to convert **CGA** to displayable data.
 
 To achieve all these goals this, we used a **CGA** C++ library generated through [Garamon](https://github.com/vincentnozick/garamon) using [c3ga config file](https://github.com/vincentnozick/garamon/blob/master/conf/c3ga.conf), and **OpenGL** for the rendering.
 
-The application consists of an arena made of **CGA** planes in which you can throw bouncing ball (**CGA** spheres) around.
+The application consists of an arena made of **CGA** planes in which you can throw bouncing balls (**CGA** spheres) around.
 
 
 ## Usage
@@ -18,7 +18,7 @@ The application consists of an arena made of **CGA** planes in which you can thr
 * `GLEW >= 2.1.0`
 * `eigen3 >= 3.3.0`
 
-All other needed libraries is included in the repository.
+All other needed libraries are included in the repository.
 
 ### Compilation
 
@@ -52,17 +52,17 @@ The program is launch with the compiled executable `ga_bounce`.
     * Use the mouse to look around.
 
 * Ball :
-	* `LEFT BUTTON` : Throw a ball.
+    * `LEFT BUTTON` : Throw a ball.
     * `MOUSE WHEEL` : Change the speed of the ball.
     * `RIGHT CLICK` + `MOUSE WHEEL` : Change the size of the ball.
     * `MIDDLE CLICK` + `MOUSE WHEEL` : Change the number of bounces before a ball disappear.
 
 * Others :  
-	* `F10` : Switch debug information display.
-	* `ALT` : Free mouse (allow to interact with debug display)  .
-	* `ESC` To exit the application.
+    * `F10` : Switch debug information display.
+    * `ALT` : Free mouse (allow to interact with debug display)  .
+    * `ESC` To exit the application.
 
-Balls's settings can also be changed on the debug display once the mouse has been freed.
+Balls' settings can also be changed on the debug display once the mouse has been freed.
 
 Note that controls are given for a QWERTY` layout, they should adapt to your layout.
 
@@ -72,7 +72,7 @@ Note that controls are given for a QWERTY` layout, they should adapt to your lay
 
 ### Transformations
 
-In **CGA**, transformations are done through **Versors** and are based on the geometric product of vectors, such transformations correspond to this algebra's characteristic "***sandwich***" operations. Wan can apply a **Versor** `V` to an object `x` by `sandwiching` it with it's inverse: `V * x * V.inv()`.
+In **CGA**, transformations are done through **Versors** and are based on the geometric product of vectors, such transformations correspond to this algebra's characteristic "***sandwich***" operations. Wan can apply a **Versor** `V` to an object `x` by `sandwiching` it with its inverse: `V * x * V.inv()`.
 
 In this application, this is done with the *Functor* [`Versor<T>`](include/app/Versor.hpp), which contains shortcut static factory such as:
 
@@ -93,9 +93,9 @@ The arena is the inside of an [elongated square gyrobicupola](https://en.wikiped
 
 ![](assets/doc/elongated_square_gyrobicupola.png)
 
-Since the elongated square gyrobicupola is convex, each plane corresponding to each face does not intersect witch each other inside the arena, but only on the outside. This result in the possibility to use these planes in **CGA** for collision detection and reflection computation between the surface of the arena and the balls.
+Since the elongated square gyrobicupola is convex, each plane corresponding to each face does not intersect witch each other inside the arena, but only on the outside. This results in the possibility to use these planes in **CGA** for collision detection and reflection computation between the surface of the arena and the balls.
 
-An *elongated square gyrobicupola* is composed 26 faces : 18 squares and 8 triangles. The implementation of the classes representing these type of faces are quite similar, they are composed of **3 points** for the Triangle, and **4 points** for the Square, **a plane** computed from the *wedge* of 3 of these points, and a **normal** computed from the *geometric product* of the plane and one of the points :
+An *elongated square gyrobicupola* is composed of 26 faces: 18 squares and 8 triangles. The implementation of the classes representing these type of faces are quite similar, they are composed of **3 points** for the Triangle, and **4 points** for the Square, **a plane** computed from the *wedge* of 3 of these points, and a **normal** computed from the *geometric product* of the plane and one of the points :
 
 E.G. for the square :
 ```cpp
@@ -105,7 +105,7 @@ c3ga::Mvec<GLfloat> normal = plane * a;
 ```
 
 
-The entire arena can be builded with only 4 points, to which we apply *translator* and *rotor*. Example of such transformations can be found in [`src/app/object/Arena.cpp`](src/app/object/Arena.cpp).
+The entire arena can be built with only 4 points, to which we apply *translator* and *rotor*. Example of such transformations can be found in [`src/app/object/Arena.cpp`](src/app/object/Arena.cpp).
 
 Once every face is done and properly placed, we can retrieve the corresponding vertices in Euclidean Space (to use in *OpenGL*) as follow :
 
@@ -157,7 +157,7 @@ glm::vec3 center = { dual[c3ga::E1], dual[c3ga::E2], dual[c3ga::E3] };
 
 and using the euclidean equation of a sphere.
 
-At each tick of the engine (60 per sec), the translator is applied to the sphere, and if a collision with the Arena occured, the new translator resulting of the reflection is computed.
+At each tick of the engine (60 per sec), the translator is applied to the sphere, and if a collision with the Arena occurred, the new translator resulting from the reflection is computed.
 
 We can check that a collision occurred between a sphere and a plane by **checking the sign of the dual circle** resulting of the *inner product* of the dual of the sphere and the plane, and to compute the new translator, we can just *sandwich* the translator with the plane the sphere collided with : 
 
