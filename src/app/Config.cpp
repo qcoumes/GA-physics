@@ -3,7 +3,7 @@
 #include <iterator>
 
 #include <SDL_mouse.h>
-#include <cpuid/libcpuid.h>
+#include <libcpuid.h>
 
 #include <app/Config.hpp>
 

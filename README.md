@@ -12,7 +12,7 @@ The application consists of an arena made of **CGA** planes in which you can thr
 
 ### Prerequisites
 
-* `CMake >= 3.7`
+* `CMake >= 3.10`
 * `SDL2 >= 2.0.2`
 * `OpenGL >= 3.3`
 * `GLEW >= 2.1.0`

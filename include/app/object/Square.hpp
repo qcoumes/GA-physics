@@ -11,26 +11,26 @@
 
 namespace app::object {
     
-    class Square : public ObjectC3GA {
+class Square : public ObjectC3GA {
+    
+    private:
+        static constexpr GLuint VERTEX_ATTR_POSITION = 0;
+        static constexpr GLuint VERTEX_ATTR_NORMAL = 1;
+        static constexpr GLuint VERTEX_ATTR_TEXTURE = 2;
         
-        private:
-            static constexpr GLuint VERTEX_ATTR_POSITION = 0;
-            static constexpr GLuint VERTEX_ATTR_NORMAL = 1;
-            static constexpr GLuint VERTEX_ATTR_TEXTURE = 2;
-            
-            std::shared_ptr<shader::ShaderTexture> shader;
-            std::shared_ptr<shader::Texture> texture;
-            
-            c3ga::Mvec<GLfloat> plane;
-            c3ga::Mvec<GLfloat> normal;
-            c3ga::Mvec<GLfloat> a;
-            c3ga::Mvec<GLfloat> b;
-            c3ga::Mvec<GLfloat> c;
-            c3ga::Mvec<GLfloat> d;
-            
-            GLboolean modified;
-            GLuint vbo = 0;
-            GLuint vao = 0;
+        std::shared_ptr<shader::ShaderTexture> shader;
+        std::shared_ptr<shader::Texture> texture;
+        
+        c3ga::Mvec<GLfloat> plane;
+        c3ga::Mvec<GLfloat> normal;
+        c3ga::Mvec<GLfloat> a;
+        c3ga::Mvec<GLfloat> b;
+        c3ga::Mvec<GLfloat> c;
+        c3ga::Mvec<GLfloat> d;
+        
+        GLboolean modified;
+        GLuint vbo = 0;
+        GLuint vao = 0;
         
         public:
             

@@ -60,7 +60,7 @@ namespace app {
             
             GLfloat projSpeed = 2.f; /**< Speed of projectiles. */
             GLfloat projSize = 4.f;     /**< Size of projectiles. */
-            GLuint projBounce = 4;    /**< Number of bounce before projectile disappear. */
+            GLuint projBounce = 10;    /**< Number of bounce before projectile disappear. */
             
             Config() = default;
         
